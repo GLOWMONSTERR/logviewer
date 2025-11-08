@@ -60,6 +60,14 @@ winget install --id Git.Git
 
 After installing, restart your terminal (or run `refreshenv` if you use Chocolatey) so the new paths are available.
 
+If `pipenv` still isn't found afterwards, use the full module invocation instead of relying on the PATH:
+
+```powershell
+py -3.11 -m pipenv --version
+```
+
+That command should print the installed version. You can keep the `py -3.11 -m pipenv` prefix for any later pipenv command if you prefer.
+
 
 ### Deployment
 
@@ -75,10 +83,10 @@ On Windows PowerShell, use the `py` launcher instead of `python3` and `copy` ins
 
 ```powershell
 py -3.11 -m pip install pipenv
-pipenv install
+py -3.11 -m pipenv install
 copy .env.example .env
 ```
-Edit the `.env` file (e.g. `nano .env`) and fill in your MongoDB connection URI. 
+Edit the `.env` file (e.g. `nano .env`) and fill in your MongoDB connection URI.
 
 > You can also customize the bind IP and port in the `.env` file.
 
