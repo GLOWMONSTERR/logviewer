@@ -90,6 +90,28 @@ Edit the `.env` file (e.g. `nano .env`) and fill in your MongoDB connection URI.
 
 > You can also customize the bind IP and port in the `.env` file.
 
+#### If `pipenv install` fails while building `httptools`
+
+Windows users sometimes see the following error when Pipenv installs the dependencies:
+
+```
+error: Microsoft Visual C++ 14.0 or greater is required. Get it with "Microsoft C++ Build Tools"
+```
+
+That happens because `httptools` (one of Sanic's dependencies) needs a C compiler when no prebuilt wheel
+is available for your Python version. Fix it with either option below, then rerun `py -3.11 -m pipenv install`:
+
+- **Install the Microsoft C++ Build Tools.** Download the "Build Tools for Visual Studio" from
+  <https://visualstudio.microsoft.com/visual-cpp-build-tools/>, run the installer, and select the
+  "Desktop development with C++" workload. After installation, close and reopen PowerShell so the
+  new environment variables load.
+- **Or install a matching Python interpreter that already has a compatible wheel.** For example, the
+  64-bit Python 3.11 installer from python.org ships wheels for `httptools 0.5.0`, so `py -3.11 -m pipenv install`
+  succeeds without needing extra build tools.
+
+Once the compiler or matching Python runtime is in place, rerun the install command and Pipenv will finish
+setting up the virtual environment.
+
 ### Running in Visual Studio Code on Windows
 
 1. Install [Visual Studio Code](https://code.visualstudio.com/) and add the official **Python** extension when prompted.
