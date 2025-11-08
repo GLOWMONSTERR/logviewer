@@ -2,8 +2,14 @@ __version__ = "1.1.2"
 
 import html
 import os
+import asyncio
+import types
 
 from dotenv import load_dotenv
+
+if not hasattr(asyncio, "coroutine"):
+    asyncio.coroutine = types.coroutine  # type: ignore[attr-defined]
+
 from motor.motor_asyncio import AsyncIOMotorClient
 from sanic import Sanic, response
 from sanic.exceptions import NotFound

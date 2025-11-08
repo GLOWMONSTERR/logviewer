@@ -41,13 +41,32 @@ Below are some general instructions to help you get started on a Linux machine.
 
 ### Prerequisites
 
-- A [Python 3.9 installation](https://www.python.org/downloads/) with `pip`
+- A [Python 3.9+ installation](https://www.python.org/downloads/) with `pip`
 - `git` for your system
 
-e.g. on Ubuntu: 
+**Linux (Ubuntu example)**
 ```shell
 sudo apt install software-properties-common python3.9 python3-dev python3-pip
 ```
+
+**Windows (PowerShell)**
+
+Install Python and Git with [winget](https://learn.microsoft.com/windows/package-manager/winget/) or grab the installers from their official websites:
+
+```powershell
+winget install --id Python.Python.3.11
+winget install --id Git.Git
+```
+
+After installing, restart your terminal (or run `refreshenv` if you use Chocolatey) so the new paths are available.
+
+If `pipenv` still isn't found afterwards, use the full module invocation instead of relying on the PATH:
+
+```powershell
+py -3.11 -m pipenv --version
+```
+
+That command should print the installed version. You can keep the `py -3.11 -m pipenv` prefix for any later pipenv command if you prefer.
 
 
 ### Deployment
@@ -60,9 +79,56 @@ python3 -m pip install pipenv
 pipenv install
 cp .env.example .env
 ```
-Edit the `.env` file (e.g. `nano .env`) and fill in your MongoDB connection URI. 
+On Windows PowerShell, use the `py` launcher instead of `python3` and `copy` instead of `cp`:
+
+```powershell
+py -3.11 -m pip install pipenv
+py -3.11 -m pipenv install
+copy .env.example .env
+```
+Edit the `.env` file (e.g. `nano .env`) and fill in your MongoDB connection URI.
 
 > You can also customize the bind IP and port in the `.env` file.
+
+#### If `pipenv install` fails while building `httptools`
+
+Windows users sometimes see the following error when Pipenv installs the dependencies:
+
+```
+error: Microsoft Visual C++ 14.0 or greater is required. Get it with "Microsoft C++ Build Tools"
+```
+
+That happens because `httptools` (one of Sanic's dependencies) needs a C compiler when no prebuilt wheel
+is available for your Python version. Fix it with either option below, then rerun `py -3.11 -m pipenv install`:
+
+- **Install the Microsoft C++ Build Tools.** Download the "Build Tools for Visual Studio" from
+  <https://visualstudio.microsoft.com/visual-cpp-build-tools/>. These tools are separate from
+  Visual Studio Code—installing VS Code alone will not provide the compiler. Run the installer and
+  select the "Desktop development with C++" workload. After installation, close and reopen
+  PowerShell so the new environment variables load.
+- **Or install a matching Python interpreter that already has a compatible wheel.** For example, the
+  64-bit Python 3.11 installer from python.org ships wheels for `httptools 0.5.0`, so `py -3.11 -m pipenv install`
+  succeeds without needing extra build tools.
+
+Once the compiler or matching Python runtime is in place, rerun the install command and Pipenv will finish
+setting up the virtual environment.
+
+### Running in Visual Studio Code on Windows
+
+1. Install [Visual Studio Code](https://code.visualstudio.com/) and add the official **Python** extension when prompted.
+2. Open VS Code, choose **File → Open Folder…**, and select the cloned `logviewer` project folder.
+3. Open the Command Palette (`Ctrl` + `Shift` + `P`) and run **Python: Select Interpreter**. Pick the entry that points to `.venv` inside the project. If no Pipenv environment is listed yet, open the VS Code terminal and run `py -3.11 -m pipenv install` first, then repeat the interpreter selection.
+4. Use the built-in terminal (**Terminal → New Terminal**) and start an interactive Pipenv shell so all subsequent commands use the right environment:
+   ```powershell
+   py -3.11 -m pipenv shell
+   ```
+5. From that terminal, launch the site with:
+   ```powershell
+   pipenv run logviewer
+   ```
+   VS Code will keep the server running in the terminal; open `http://127.0.0.1:8000` in your browser to view the app. When you are done, press `Ctrl` + `C` in the terminal to stop it.
+
+If you prefer one-click debugging, open the **Run and Debug** panel in VS Code, choose **create a launch.json**, and pick **Python → Module**. Set the module name to `logviewer` and the working directory to the project root so the debugger uses the same command as above.
 
 Then to start the app, run:
 ```shell
