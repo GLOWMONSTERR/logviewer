@@ -102,9 +102,10 @@ That happens because `httptools` (one of Sanic's dependencies) needs a C compile
 is available for your Python version. Fix it with either option below, then rerun `py -3.11 -m pipenv install`:
 
 - **Install the Microsoft C++ Build Tools.** Download the "Build Tools for Visual Studio" from
-  <https://visualstudio.microsoft.com/visual-cpp-build-tools/>, run the installer, and select the
-  "Desktop development with C++" workload. After installation, close and reopen PowerShell so the
-  new environment variables load.
+  <https://visualstudio.microsoft.com/visual-cpp-build-tools/>. These tools are separate from
+  Visual Studio Code—installing VS Code alone will not provide the compiler. Run the installer and
+  select the "Desktop development with C++" workload. After installation, close and reopen
+  PowerShell so the new environment variables load.
 - **Or install a matching Python interpreter that already has a compatible wheel.** For example, the
   64-bit Python 3.11 installer from python.org ships wheels for `httptools 0.5.0`, so `py -3.11 -m pipenv install`
   succeeds without needing extra build tools.
