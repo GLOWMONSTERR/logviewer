@@ -1,23 +1,61 @@
 {% extends "base.html" %}
 {% block content %}
 
-<main>
-
-<div class="vertical-align-middle center container">
-    <div class="card-panel hoverable" id='main-card'>
-        <h1 class="animated jackInTheBox header" id='dashbots'>Logviewer</h1>
-        <h5 class="header col s12 light grey-text">This site is used to display Modmail log entries.</h5>
-        <br>
-        <div class="row center">
-            <a href="https://discord.gg/cnUpwrnpYb" class="btn waves-effect my-button">Discord</a>
-            <a href="https://github.com/modmail-dev/modmail" class="btn waves-effect my-button">Github</a>
-            <a href="https://docs.modmail.dev/" class="btn waves-effect my-button">Docs</a>
-            <a href="https://patreon.com/kyber" class="btn waves-effect my-button">Patreon</a>
+<main class="hero-aurora">
+    <canvas id="aurora-canvas" aria-hidden="true"></canvas>
+    <div class="hero-content container center">
+        <div class="card-panel hoverable" id="main-card">
+            <h1 class="animated jackInTheBox header" id="dashbots">Logviewer</h1>
+            <h5 class="header col s12 light grey-text">This site is used to display Modmail log entries.</h5>
             <br>
+            <div class="row center">
+                <a href="https://discord.gg/cnUpwrnpYb" class="btn waves-effect my-button">Discord</a>
+                <a href="https://github.com/modmail-dev/modmail" class="btn waves-effect my-button">Github</a>
+                <a href="https://docs.modmail.dev/" class="btn waves-effect my-button">Docs</a>
+                <a href="https://patreon.com/kyber" class="btn waves-effect my-button">Patreon</a>
+                <br>
+            </div>
         </div>
     </div>
-</div>
-
 </main>
 
+<section class="aurora-playground">
+    <div class="container">
+        <div class="card-panel transparent-card">
+            <div class="row valign-wrapper">
+                <div class="col s12 m5 l4">
+                    <h2 class="aurora-heading">
+                        <i class="material-icons aurora-icon" aria-hidden="true">auto_awesome</i>
+                        Aurora Playground
+                    </h2>
+                    <p class="aurora-subtitle">
+                        Sculpt a neon skyline for your logs and export the colour palette to your own themes.
+                    </p>
+                </div>
+                <div class="col s12 m7 l8">
+                    <div class="aurora-controls">
+                        <p class="aurora-description">
+                            Each bloom in the hero above is generated live with WebGL-free canvas magic. Shuffle the
+                            spectrum to discover new atmospheres, or pause the motion for a crisp wallpaper-ready frame.
+                        </p>
+                        <div class="aurora-buttons">
+                            <a id="aurora-shuffle" class="btn waves-effect">Shuffle Glow</a>
+                            <a id="aurora-toggle" class="btn waves-effect secondary-btn">Pause Motion</a>
+                        </div>
+                        <div class="aurora-palette" aria-live="polite">
+                            <span class="palette-label">Current palette</span>
+                            <ul id="aurora-colors"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="/static/js/aurora.js"></script>
 {% endblock %}
