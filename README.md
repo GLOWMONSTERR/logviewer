@@ -90,6 +90,23 @@ Edit the `.env` file (e.g. `nano .env`) and fill in your MongoDB connection URI.
 
 > You can also customize the bind IP and port in the `.env` file.
 
+### Running in Visual Studio Code on Windows
+
+1. Install [Visual Studio Code](https://code.visualstudio.com/) and add the official **Python** extension when prompted.
+2. Open VS Code, choose **File → Open Folder…**, and select the cloned `logviewer` project folder.
+3. Open the Command Palette (`Ctrl` + `Shift` + `P`) and run **Python: Select Interpreter**. Pick the entry that points to `.venv` inside the project. If no Pipenv environment is listed yet, open the VS Code terminal and run `py -3.11 -m pipenv install` first, then repeat the interpreter selection.
+4. Use the built-in terminal (**Terminal → New Terminal**) and start an interactive Pipenv shell so all subsequent commands use the right environment:
+   ```powershell
+   py -3.11 -m pipenv shell
+   ```
+5. From that terminal, launch the site with:
+   ```powershell
+   pipenv run logviewer
+   ```
+   VS Code will keep the server running in the terminal; open `http://127.0.0.1:8000` in your browser to view the app. When you are done, press `Ctrl` + `C` in the terminal to stop it.
+
+If you prefer one-click debugging, open the **Run and Debug** panel in VS Code, choose **create a launch.json**, and pick **Python → Module**. Set the module name to `logviewer` and the working directory to the project root so the debugger uses the same command as above.
+
 Then to start the app, run:
 ```shell
 pipenv run logviewer
