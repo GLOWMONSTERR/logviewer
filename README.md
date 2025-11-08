@@ -41,13 +41,24 @@ Below are some general instructions to help you get started on a Linux machine.
 
 ### Prerequisites
 
-- A [Python 3.9 installation](https://www.python.org/downloads/) with `pip`
+- A [Python 3.9+ installation](https://www.python.org/downloads/) with `pip`
 - `git` for your system
 
-e.g. on Ubuntu: 
+**Linux (Ubuntu example)**
 ```shell
 sudo apt install software-properties-common python3.9 python3-dev python3-pip
 ```
+
+**Windows (PowerShell)**
+
+Install Python and Git with [winget](https://learn.microsoft.com/windows/package-manager/winget/) or grab the installers from their official websites:
+
+```powershell
+winget install --id Python.Python.3.11
+winget install --id Git.Git
+```
+
+After installing, restart your terminal (or run `refreshenv` if you use Chocolatey) so the new paths are available.
 
 
 ### Deployment
@@ -59,6 +70,13 @@ cd logviewer
 python3 -m pip install pipenv
 pipenv install
 cp .env.example .env
+```
+On Windows PowerShell, use the `py` launcher instead of `python3` and `copy` instead of `cp`:
+
+```powershell
+py -3.11 -m pip install pipenv
+pipenv install
+copy .env.example .env
 ```
 Edit the `.env` file (e.g. `nano .env`) and fill in your MongoDB connection URI. 
 
